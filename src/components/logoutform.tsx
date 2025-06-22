@@ -1,10 +1,17 @@
-import {sessionOptions,SessionData} from "@/lib"
-import {getIronSession} from "iron-session";
-import{cookies} from "next/headers";
+import {login} from '@/actions'
+import { useFormState } from 'react-dom'
 
-export const getSection=async()=>{
-    const session= await getIronSession<SessionData>{cookies(),sessionOptions};
-    return session;
+const LogoutForm=()=>{
+
+    const [state,formAction]=useFormState<any,FormData> (login,undefined)
+    return (
+        <form action={formAction}>
+            <input type='txt' name='username' required placeholder="username"/>
+            <input type='password' name='password' required placeholder="password"/>
+            <button>logout</button>
+            {state?.error && <p>{state.error}</p>}
+        </form>
+    )
 }
-export const login = async()=>{}
-export const logout=async()=>{}
+
+export default LogoutForm

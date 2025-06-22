@@ -1,16 +1,23 @@
 import Link from 'next/link';
-import logoutform from './logoutform';
+import LogoutForm from './logoutform';
+import { getSession } from "@/action";
 
-const navbar = () => {
+const navbar = async () => {
+  const session = await getSession();
+
   return (
     <nav>
-        <Link href="/">Homepage</Link>
-        <Link href="/premium">Premium</Link>
-        <Link href="/profile">Profile</Link>
-        <Link href="/login">Login</Link>
-        <logoutform />
-    </nav>
-  )
-}
+      <Link href="/">Homepage</Link>
+      <Link href="/premium">Premium</Link>
+      <Link href="/profile">Profile</Link>
 
-export default navbar
+      {!session.isLoggedIn ? (
+        <Link href="/login">Login</Link>
+      ) : (
+        <LogoutForm />
+      )}
+    </nav>
+  );
+};
+
+export default navbar;

@@ -1,10 +1,12 @@
 import React from 'react'
+import {getSession} from "@/action";
+const page = ansyc () => {
 
-const page = () => {
+  const session= await getSession();
   return (
-    <div>
-      <h1>Hello World</h1>
-      <p>This is a test</p>
+    <div className='profile'>
+      <h1>Welcome to the profile Page</h1>
+      <p>Welcome , <a>{session.username}</a></p>
     </div>
   )
 }
