@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 
 let username = "john";
 let isPro = true;
-const isBlocked = true;
+let isBlocked = true;
 
 export const getSession = async () => {
     const cookieStore = await cookies();

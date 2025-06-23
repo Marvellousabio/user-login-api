@@ -14,9 +14,9 @@ const ProfilePage = async() => {
       <p>
         Welcome <a>{session.username}</a>
       </p>
-      <span>You are to <a>{session.isPro?"premium":"free"}</a> Users</span>
+      <span>You are a <b>{session.isPro?"Premium":"Free"}</b> Users</span>
       <form action={changePremium}>
-        <button>{session.isPro ?"cancel":"Buy"} premium</button>
+        <button>{session.isPro ?"Cancel":"Buy"} premium</button>
       </form>
 
       <form action={changeUsername}>
