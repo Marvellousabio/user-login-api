@@ -6,15 +6,17 @@ export interface SessionData {
   img?: string;
   isPro?: boolean;
   isLoggedIn: boolean;
-  isBlocked?:boolean;
+  isBlocked?: boolean;
 }
 
 export const defaultSession: SessionData = {
   isLoggedIn: false,
+  isPro: false,
+  isBlocked: false,
 };
 
 export const sessionOptions: SessionOptions = {
-  password: process.env.SECRETE_API!,
+  password: process.env.SESSION_PASSWORD as string,
   cookieName: "lama-session",
   cookieOptions: {
     httpOnly: true,

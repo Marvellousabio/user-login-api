@@ -10,7 +10,7 @@ const LoginForm=()=>{
         <form action={formAction}>
             <input type='text' name='username' required placeholder="username"/>
             <input type='password' name='password' required placeholder="password"/>
-            <button>logout</button>
+            <button>login</button>
             {state?.error && <p>{state.error}</p>}
         </form>
     )
