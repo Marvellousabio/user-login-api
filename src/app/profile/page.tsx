@@ -1,8 +1,8 @@
 import React from 'react'
-import {getSession} from "@/action";
+import {changePremium, changeUsername, getSession} from "@/action";
 import {redirect} from "next/navigation";
 
-const page = async() => {
+const ProfilePage = async() => {
   const session=await getSession();
 
   if(!session.isLoggedIn){
@@ -14,9 +14,17 @@ const page = async() => {
       <p>
         Welcome <a>{session.username}</a>
       </p>
-      <span>You are to <a>{session.isPro?"premium":"free"}</a></span>
-    </div>
-  )
-}
+      <span>You are to <a>{session.isPro?"premium":"free"}</a> Users</span>
+      <form action={changePremium}>
+        <button>{session.isPro ?"cancel":"Buy"} premium</button>
+      </form>
 
-export default page
+      <form action={changeUsername}>
+        <input type='text' name='username' required placeholder={session.username} />
+        <button>Update</button>
+      </form>
+    </div>
+  );
+};
+
+export default ProfilePage;

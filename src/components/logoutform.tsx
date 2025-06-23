@@ -1,15 +1,9 @@
-import {login} from '@/actions'
-import { useFormState } from 'react-dom'
+import {logout} from "@/action";
 
 const LogoutForm=()=>{
-
-    const [state,formAction]=useFormState<any,FormData> (login,undefined)
-    return (
-        <form action={formAction}>
-            <input type='txt' name='username' required placeholder="username"/>
-            <input type='password' name='password' required placeholder="password"/>
+    return(
+        <form action={logout}>
             <button>logout</button>
-            {state?.error && <p>{state.error}</p>}
         </form>
     )
 }

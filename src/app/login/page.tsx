@@ -1,9 +1,20 @@
-import React from 'react'
+import LoginForm from "@/components/login"
+import { getSession } from "@/action"
+import { redirect } from "next/navigation"
 
-const page = () => {
+
+const LoginPage = async() => {
+  const session=await getSession()
+  
+  if (session.isLoggedIn){
+    redirect("/")
+  }
   return (
-    <div>page</div>
+    <div className="login">
+      <h1>Welcome to the LoginPage</h1>
+      <LoginForm/>
+    </div>
   )
 }
 
-export default page
+export default LoginPage

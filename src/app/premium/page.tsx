@@ -1,9 +1,33 @@
-import React from 'react'
+import Link from "next/link";
+import { getSession } from "@/action";
+import { redirect } from "next/navigation";
 
-const page = () => {
+const PremiumPage = async() => {
+  const session = await getSession();
+
+  if(!session.isLoggedIn){
+    redirect("/");
+  }
+  if(!session.isPro){
+    return(
+      <div className='notPremium'>
+        <h1>Only premium users can see the content!</h1>
+        <Link href="/profile">
+          Go to the profile page to upgrade to premium
+        </Link>
+      </div>
+    );
+  }
   return (
-    <div>page</div>
+    <div className='premium'>
+      <h1>Welcome to the PremiumPage</h1>
+      <ul>
+        <li>Apple</li>
+        <li>Orange</li>
+        <li>Peach</li>
+      </ul>
+    </div>
   )
 }
 
-export default page
+export default PremiumPage

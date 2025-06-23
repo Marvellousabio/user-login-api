@@ -1,26 +1,35 @@
 "use server";
+
 import { sessionOptions, SessionData, defaultSession } from "@/lib";
 import { getIronSession } from "iron-session";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+
 
 let username = "john";
 let isPro = true;
+const isBlocked = true;
 
 export const getSession = async () => {
-    const session = await getIronSession<SessionData>(cookies(), sessionOptions);
-
+    const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
     if (!session.isLoggedIn) {
         session.isLoggedIn = defaultSession.isLoggedIn;
     }
 
+    session.isBlocked = isBlocked;
+    session.isPro = isPro;
     return session;
 };
 
-export const login = async (prevState:(error:undefined ||string), formData: FormData) => {
+export const login = async (
+    prevState:{error:undefined | string},
+     formData: FormData
+    ) => {
     const session = await getSession();
 
     const formUsername = formData.get("username") as string;
-    const formPassword = formData.get("password") as string;
+    // const formPassword = formData.get("password") as string;
 
     if (formUsername !== username) {
         return { error: "wrong Credentials" };
@@ -33,8 +42,6 @@ export const login = async (prevState:(error:undefined ||string), formData: Form
 
     await session.save(); // Make sure to persist the session
     redirect("/")
-
-    return { success: true };
 };
 
 export const logout = async () => {
@@ -42,3 +49,24 @@ export const logout = async () => {
      session.destroy(); // Properly logs the user out
      redirect("/");
 };
+export const changePremium = async () => {
+    const session = await getSession();
+
+    isPro = !session.isPro;
+    session.isPro = isPro;
+    
+    await session.save();
+    revalidatePath("/profile");
+};
+
+export const changeUsername= async (formData: FormData) => {
+    const session = await getSession();
+    const newUsername=formData.get("username") as string;
+
+    username=newUsername;
+
+    session.username = username;
+    await session.save();
+    revalidatePath("/profile");
+
+}

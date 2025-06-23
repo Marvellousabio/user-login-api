@@ -10,12 +10,8 @@ const navbar = async () => {
       <Link href="/">Homepage</Link>
       <Link href="/premium">Premium</Link>
       <Link href="/profile">Profile</Link>
-
-      {!session.isLoggedIn ? (
-        <Link href="/login">Login</Link>
-      ) : (
-        <LogoutForm />
-      )}
+      <Link href="/login">Login</Link>
+      {session.isLoggedIn && <LogoutForm />}
     </nav>
   );
 };
